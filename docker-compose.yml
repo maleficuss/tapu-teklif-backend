@@ -1,0 +1,35 @@
+version: '3'
+services:
+  tododb:
+    container_name: tododb
+    image: postgres:13.1
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=postgre
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_PASSWORD=postgre
+      - POSTGRES_DB=todo
+    networks:
+      - todonetwork
+  backend:
+    container_name: todo_backend
+    image: maleficus/todo_backend
+    build: .
+    ports:
+      - 8080:8080
+    networks:
+      - todonetwork
+
+  frontend:
+    container_name: todo_frontend
+    image: maleficus/todo_frontend
+    build: .
+    ports:
+      - 80:80
+    networks:
+      - todonetwork
+
+networks:
+  todonetwork:
+    name: todonetwork

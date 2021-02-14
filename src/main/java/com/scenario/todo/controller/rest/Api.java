@@ -13,6 +13,6 @@ import java.lang.annotation.*;
 @RequestMapping("api")
 @Documented
 @ResponseBody
-@CrossOrigin
+@CrossOrigin(originPatterns = "*")
 public @interface Api {
 }
