@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 services:
   tododb:
     container_name: tododb
@@ -12,24 +12,27 @@ services:
       - POSTGRES_DB=todo
     networks:
       - todonetwork
-  backend:
-    container_name: todo_backend
-    image: maleficus/todo_backend
-    build: .
-    ports:
-      - 8080:8080
-    networks:
-      - todonetwork
 
   frontend:
     container_name: todo_frontend
     image: maleficus/todo_frontend
-    build: .
     ports:
       - 80:80
     networks:
       - todonetwork
+    depends_on:
+      - backend
+
+  backend:
+    container_name: todo_backend
+    image: maleficus/todo_backend
+    ports:
+      - 8080:8080
+    networks:
+      - todonetwork
+    depends_on:
+      - tododb
+
 
 networks:
   todonetwork:
-    name: todonetwork
